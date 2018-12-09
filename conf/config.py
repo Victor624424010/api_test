@@ -48,4 +48,3 @@ receiver = '963570929@qq.com'
 subject = '接口测试报告'
 body = 'hi,all,\n附件中是解救测试报告，请查收'
 
-is_send_report = False

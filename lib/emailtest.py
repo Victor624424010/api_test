@@ -11,17 +11,22 @@ def send_report():
     #组装邮件头
     body['from'] = config.smtp_user
     body['To'] = config.receiver
-    body['Subject'] = 'from python'
+    body['Subject'] = config.subject
     #附件
-    with open('../report/report.html','rb')as f:
+    with open(config.report_file,'rb')as f:
         att_file = f.read()
     att = MIMEText(att_file,'base64','utf-8')
     att['Content-Type']='application/octet-stream'#声明附件内容格式MIMIE数据流格式
-    att['Content-Disposition']="attachment;filename='report.html'"#f附件描述信息
+    att['Content-Disposition']='attachment;filename="report.html"'#f附件描述信息
     body.attach(att)
     #连接smtp服务器并发送
-    smtp = smtplib.SMTP_SSL('smtp.qq.com')#建立连接
-    smtp.login ('624424010@qq.com','Victor929115')#登录邮箱
-    smtp.sendmail('624424010@qq.com','963570929@qq.com',body.as_string())#发送邮件
+    smtp = smtplib.SMTP_SSL(config.smtp_server)#建立连接
+    smtp.login (config.smtp_user,config.smtp_password)#登录邮箱
+    smtp.sendmail(config.smtp_user,config.receiver,body.as_string())#发送邮件
+
+Is_send_report = True
+
+if __name__ == '__main__':
+    send_report()
 
 
